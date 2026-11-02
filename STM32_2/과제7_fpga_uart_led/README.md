@@ -1,10 +1,20 @@
-# STM32_2_과제7 · UART 명령으로 FPGA LED 제어
+# STM32_2_과제7 · UART 명령으로 FPGA LED 제어 (실사용 버전)
 
-**이 코드는 ece2_474/FPGA_additional.md에서 가져온 게 아니라, STM32_2.md의
-과제7 스펙(아래 명령표)을 보고 제가 새로 작성한 코드입니다.** 과제5~7은
-저장소가 "정답 코드는 제공하지 않는다"고 명시한 영역이라, mult_4bit 같은
-개별실습과 달리 여기 코드는 기존 실습처럼 '전사(transcribe)'한 게 아니라
-학생 과제를 직접 설계한 것입니다. 참고하세요.
+이 폴더의 최종 코드는 `task7_uart_led.v` + `uart.v`(uart_rx/uart_tx)다.
+VS Code + Icarus Verilog(VaporView)로 직접 시뮬레이션해 PASS를 확인했고
+(`evidence/simulation.log`), 실제 XDC(`constraints/task7_uart_led.xdc`)로
+보드 핀도 배정했다.
+
+## draft_v1_미사용/ 폴더에 대해
+
+`draft_v1_미사용/`은 이전에 iverilog 없이 작성했던 1차 버전
+(uart_rx.v/led_cmd_decoder.v/uart_led_ctrl.v)이다. 명령 해석 로직은
+같지만 **UART TX(수신 바이트를 그대로 되돌려 보내는 echo) 기능이 없었다.**
+실제로 보드에 올려 쓴 버전은 TX echo까지 포함한 `task7_uart_led.v`이므로,
+1차 버전은 참고용으로만 남겨두고 레포트·보드 구현은 이 폴더 최상위
+버전을 기준으로 한다.
+
+## 명령표
 
 | 받은 문자 | LED 동작 |
 |---|---|
@@ -13,39 +23,18 @@
 | `2` (0x32) | 반전 |
 | 그 외 | 유지 |
 
+받은 바이트는 LED 제어와 별개로 `uart_txd`를 통해 그대로 되돌려 보낸다
+(echo) — MCU/PC 쪽에서 FPGA가 정말 그 바이트를 받았는지 확인할 수 있다.
+
 ## 검증
 
-iverilog가 이 세션에 설치돼 있지 않아 실제 시뮬레이터로 돌리지는 못했지만,
-`uart_rx.v`의 FSM(IDLE→START→DATA→STOPBIT)과 `led_cmd_decoder.v`의 명령
-해석 로직을 Python으로 사이클 단위 그대로 재현해서 0x31/0x41/0x32/0x32/0x30
-입력에 대해 LED가 켜짐→유지→꺼짐→켜짐→꺼짐으로 정확히 나오는 것을
-확인했습니다(로직 검증, Verilog 문법 자체의 컴파일 확인은 아님). 본인
-환경의 Vivado/iverilog로 `tb_uart_led_ctrl.sv`를 반드시 직접 돌려서
-PASS를 재확인하세요.
+Icarus Verilog로 `tb_task7_uart_led.sv`를 직접 실행해 8개 명령
+시퀀스(1,1,2,2,A,0,2,0)에 대해 LED 상태와 echo 바이트가 모두 일치하는
+`LAB6_TASK7_UART_LED_PASS checks=8`를 확인했다 (`evidence/simulation.log`).
 
-## 폴더 구성 / 사용법
+## 핀 배정 (XDC)
 
-```
-uart_rx.v            <- 9600bps 8N1 UART 수신기 (범용)
-led_cmd_decoder.v     <- 받은 바이트를 LED 명령으로 해석
-uart_led_ctrl.v        <- 최상위 모듈 (수신기+해석기 연결)
-tb_uart_led_ctrl.sv     <- 시뮬레이션 전용 테스트벤치
-```
-
-- **이미 LAB3 UART 에코 프로젝트가 있다면**: 그 프로젝트의 UART 수신기를
-  그대로 쓰고 `led_cmd_decoder.v`만 가져다 붙여도 됩니다. 수신기가 받은
-  바이트(`rx_byte`)와 "한 바이트 다 받았다"는 신호(`rx_valid`, 한 클록
-  펄스)만 그 모듈에 연결하면 됩니다.
-- **처음부터 구성한다면**: `uart_led_ctrl.v`를 최상위로 올리고 `uart_rx`
-  입력을 STM32_2_과제6에서 이미 XDC로 연결한 그 핀에, `led_out`은 보드의
-  LED 핀에 연결하면 됩니다.
-- 보드 클록이 50MHz가 아니거나 보레이트가 9600이 아니면
-  `uart_led_ctrl #(.CLK_HZ(...), .BAUD(...))`로 바꿔주세요.
-
-## XDC는 포함하지 않음
-
-지난 주차들과 같은 이유입니다 — `led_out`을 보드의 어느 LED 핀에 연결할지,
-`uart_rx`를 STM32_2_과제6에서 쓴 그 확장 GPIO 핀과 어떻게 맞출지는 본인
-FPGA 프로젝트의 기존 XDC(과제6에서 이미 수정한 그 파일)를 그대로 이어서
-쓰면 됩니다. 새 핀을 추가로 쓰는 게 아니라 **과제6의 RX를 그대로 재사용**
-하는 구조입니다.
+- `clk_50mhz` → B6, `rst_p` → K4
+- `uart_rxd` → G10 (MCU PC10과 점퍼선으로 연결하는 확장 GPIO)
+- `uart_txd` → F6 (보드 내장 USB-UART, 기존 LAB3 그대로)
+- `led[7:0]` → 보드 LED_D1~D8

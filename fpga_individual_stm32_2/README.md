@@ -7,9 +7,12 @@
 > 검증 범위: Icarus Verilog로 8개 테스트벤치가 모두 PASS했다. Vivado 합성·타이밍
 > 확인이나 실제 보드 시연은 아직 수행하지 않았다.
 
-이 세션에는 iverilog가 설치되어 있지 않아 직접 재시뮬레이션은 못 했다 — 코드를
-한 글자도 바꾸지 않고 그대로 복사했을 뿐이다. 실제 PASS 확인은 본인 PC/보드의
-Vivado(또는 iverilog)에서 직접 돌려봐야 한다.
+이 세션에는 iverilog가 설치되어 있지 않아 직접 재시뮬레이션은 못 했지만,
+**본인 PC(VS Code + Icarus Verilog + VaporView)로 직접 돌려 세 실습
+모두 PASS를 확인했다.** 각 폴더의 `evidence/simulation.log`(PASS 로그 원문)와
+`evidence/wave.png`(파형 스크린샷)가 그 증거다. `constraints/*.xdc`도 장비
+핀맵(Xilinx S7 Pin Map.xlsx) 기준으로 실제 작성해 추가했다 — 보드 합성·비트스트림
+업로드·실물 동작 확인만 아직 남아 있다.
 
 ## 폴더 구성
 
@@ -41,14 +44,16 @@ dac/
 2. **보드 시연**: `tb_*.sv`를 빼고, 각 폴더의 설계 `.v` 파일만 합성 프로젝트에
    추가한다. 최상위 모듈은 `servo_ctrl` / `sram` / `dac`다.
 
-## 보드 핀(XDC)은 포함하지 않음 — 반드시 교재에서 확인할 것
+## 보드 핀(XDC) — 실제 작성 완료
 
-`FPGA_additional.md` 원문대로, **이 자료에는 XDC(핀 제약) 파일이 없다.**
-보드 핀은 "장비와 함께 제공된 교재"에서 확인해야 한다 — 이건 이 저장소에도,
-내가 가진 자료에도 없는 정보라 추측해서 만들 수 없다.
+각 폴더의 `constraints/*.xdc`에 Xilinx S7 Pin Map.xlsx 기준 실제 핀을
+배정했다. 서보는 KEY01/KEY03(좌우 버튼)·KEY02(리셋), SRAM은 KEY01/KEY02(쓰기/읽기)·
+DIP_SW1~8(주소/데이터)·LED_D1~8·SRAM_A/D/CSN/OEN/WEN, DAC는 KEY01(리셋)·
+DIP_SW1(채널)·DAC_CSN/LDACN/WRN/A_B/D0~7·LED_D1~8로 연결했다. 서보는 보드
+버튼을 바로 쓰기 위해 `servo_board.v`(최상위) + `button_onepulse.v`(디바운스·
+원샷 펄스화)를 추가해 `servo_ctrl`을 감쌌다.
 
-참고로 모듈별 입출력은 다음과 같다 — 교재의 핀맵표에서 어떤 버튼/스위치/LED/
-외부 장치 핀이 이 입출력에 해당하는지 본인이 직접 매칭해야 한다.
+참고로 모듈별 입출력은 다음과 같다.
 
 | 실습 | 주요 입력 | 주요 출력 | 비고 |
 |---|---|---|---|

@@ -1,0 +1,3 @@
+VCD info: dumpfile wave.vcd opened for output.
+PASS DAC: 260 writes, wraparound, channel, data hold, reset
+C:\Users\user\Desktop\LAB6\lab6_03_dac\sim\tb_dac.sv:35: $finish called at 10436000 (1ps)

@@ -1,0 +1,3 @@
+VCD info: dumpfile wave.vcd opened for output.
+LAB6_TASK6_UART_ECHO_PASS checks=3
+C:\Users\user\Desktop\LAB6\stm32_lab\fpga_task6_uart_echo\sim\tb_uart_echo.sv:52: $finish called at 9970000 (1ps)

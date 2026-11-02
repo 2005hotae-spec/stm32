@@ -1,0 +1,11 @@
+VCD info: dumpfile wave.vcd opened for output.
+PASS command=1 (0x31) led=1 echo=0x31
+PASS command=1 (0x31) led=1 echo=0x31
+PASS command=2 (0x32) led=0 echo=0x32
+PASS command=2 (0x32) led=1 echo=0x32
+PASS command=A (0x41) led=1 echo=0x41
+PASS command=0 (0x30) led=0 echo=0x30
+PASS command=2 (0x32) led=1 echo=0x32
+PASS command=0 (0x30) led=0 echo=0x30
+LAB6_TASK7_UART_LED_PASS checks=8
+C:\Users\user\Desktop\LAB6\stm32_lab\fpga_task7_uart_led_control\sim\tb_task7_uart_led.sv:75: $finish called at 26470000 (1ps)

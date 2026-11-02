@@ -1,0 +1,3 @@
+VCD info: dumpfile wave.vcd opened for output.
+PASS servo: frame, pulse widths, limits, reset, held-button one-pulse
+C:\Users\user\Desktop\LAB6\lab6_01_servo\sim\tb_servo.sv:64: $finish called at 100846000 (1ps)

@@ -1,0 +1,3 @@
+VCD info: dumpfile wave.vcd opened for output.
+PASS SRAM: 16 addresses, bus release, simultaneous request
+C:\Users\user\Desktop\LAB6\lab6_02_sram\sim\tb_sram.sv:46: $finish called at 164000 (1ps)
