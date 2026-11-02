@@ -11,8 +11,16 @@
 **본인 PC(VS Code + Icarus Verilog + VaporView)로 직접 돌려 세 실습
 모두 PASS를 확인했다.** 각 폴더의 `evidence/simulation.log`(PASS 로그 원문)와
 `evidence/wave.png`(파형 스크린샷)가 그 증거다. `constraints/*.xdc`도 장비
-핀맵(Xilinx S7 Pin Map.xlsx) 기준으로 실제 작성해 추가했다 — 보드 합성·비트스트림
-업로드·실물 동작 확인만 아직 남아 있다.
+핀맵(Xilinx S7 Pin Map.xlsx) 기준으로 실제 작성해 추가했다.
+
+**실제 보드 합성·동작 확인도 완료했다.** 각 폴더의 `evidence/board_demo.mp4`가
+실물 보드 시연 영상이다.
+- `servo/evidence/board_demo.mp4`: KEY01/KEY03 버튼으로 서보 암이 좌우로
+  회전하는 것을 확인.
+- `sram/evidence/board_demo.mp4`: DIP 스위치로 주소·데이터를 설정하고
+  KEY01(쓰기)/KEY02(읽기)를 눌러 LED_D1~8에 읽은 값이 그대로 나오는 것을 확인.
+- `dac/evidence/board_demo.mp4`: `ramp8`이 0~255 값을 자동으로 계속 바꾸며
+  LED_D1~8(= `dac_d`)에 그 값이 실시간으로 반영되는 것을 확인(버튼 조작 불필요).
 
 ## 폴더 구성
 

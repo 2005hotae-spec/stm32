@@ -32,6 +32,10 @@ Icarus Verilog로 `tb_task7_uart_led.sv`를 직접 실행해 8개 명령
 시퀀스(1,1,2,2,A,0,2,0)에 대해 LED 상태와 echo 바이트가 모두 일치하는
 `LAB6_TASK7_UART_LED_PASS checks=8`를 확인했다 (`evidence/simulation.log`).
 
+**실제 보드 시연도 완료했다.** `evidence/board_demo.mp4`에서 NUCLEO 보드를
+점퍼선(브레드보드 경유)으로 FPGA 확장 헤더(G10, `uart_rxd`)에 연결한 상태로
+MCU가 보낸 명령 바이트에 따라 FPGA LED가 켜짐/꺼짐으로 바뀌는 것을 확인했다.
+
 ## 핀 배정 (XDC)
 
 - `clk_50mhz` → B6, `rst_p` → K4
