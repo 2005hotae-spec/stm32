@@ -13,9 +13,6 @@ Icarus Verilog로 `tb_uart_echo.sv`를 직접 실행해
 MCU 쪽은 `STM32_2/evidence/task6_ece2_474_routine.c`를 실제 빌드해
 `task6_build.png`(빌드 성공, exit code 0)로 확인했다.
 
-**실제 보드 통신도 성공했다.** `evidence/board_demo.mp4`에서 NUCLEO 보드가
-점퍼선으로 FPGA 확장 헤더(G10, `uart_rxd`)에 연결된 상태로 MCU→FPGA UART
-통신이 실제로 이루어지는 것을 확인했다(이 영상은 과제7 데모와 같은 연결·같은
-MCU 송신 코드를 쓰며, FPGA 쪽엔 당시 과제7용 `task7_uart_led` 설계가 올라가
-있었다 — LED 제어 전에 먼저 바이트를 수신해야 하므로 과제6과 동일한 통신
-경로가 그대로 쓰인다).
+**실제 보드 시연도 완료했다.** `evidence/board_demo.mp4`에서 PC(VS Code
+Serial Monitor, COM5)로 문자를 입력하면 MCU가 getchar()로 받아 UART3로
+FPGA까지 전달하는 PC→MCU→FPGA 통신을 확인했다.
