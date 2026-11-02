@@ -9,10 +9,9 @@ MSB 우선, MOSI만 사용(MISO 미사용)으로 통일.
 
 - **설계 완료**: FPGA 쪽 3개 모듈(과제10 슬레이브 수신, 과제11 마스터 송신,
   과제12 송수신 결합)과 테스트벤치를 모두 작성했다.
-- **시뮬레이션: 아직 미검증.** 테스트벤치(`sim/tb_*.sv`)는 작성됐지만, 이 세션과
-  본인 PC 양쪽 모두에서 아직 실행해보지 않았다 — 실행 결과(PASS/FAIL 로그)는
-  없다. 실제 랩 전까지 본인 PC(VS Code + Icarus Verilog)로 직접 돌려 확인할
-  예정이다.
+- **시뮬레이션 완료**: 본인 PC(VS Code + Icarus Verilog)로 세 테스트벤치
+  (`tb_spi_rx.sv`, `tb_spi_tx.sv`, `tb_spi_loopback.sv`)를 모두 직접 실행해
+  PASS를 확인했다.
 - **XDC 핀: 미완성(TODO).** `과제10_spi_rx/constraints`, `과제11_spi_tx/constraints`의
   `spi_sck`/`spi_mosi`/`spi_cs_n` 3핀은 주석 처리된 TODO 상태로 남겨뒀다. 실제
   보드 커넥터 핀은 매뉴얼의 FPGA 연결표와 장비 핀맵을 확인해 랩 당일 채울
@@ -48,10 +47,8 @@ src/
                              직결해 수신측 UART 출력이 송신값과 일치하는지 검증
 ```
 
-## 검증 계획
+## 남은 계획
 
-1. 각 폴더의 `tb_*.sv`를 Icarus Verilog로 돌려 PASS 로그를 확보한다
-   (`STM32_3_SPI_RX_PASS`, `STM32_3_SPI_TX_PASS`, `STM32_3_SPI_LOOP_PASS`).
-2. XDC의 spi_sck/spi_mosi/spi_cs_n 3핀을 실제 핀맵으로 채운다.
-3. 랩 당일 과제8(오실로스코프)→과제9(MCU-MCU)→과제10(MCU→FPGA)→과제11
+1. XDC의 spi_sck/spi_mosi/spi_cs_n 3핀을 실제 핀맵으로 채운다.
+2. 랩 당일 과제8(오실로스코프)→과제9(MCU-MCU)→과제10(MCU→FPGA)→과제11
    (FPGA→MCU)→과제12(FPGA→FPGA) 순서로 진행하며 보드 시연 증거를 추가한다.
