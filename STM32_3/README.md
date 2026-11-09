@@ -57,4 +57,8 @@ src/
 
 - `evidence/과제8_오실로스코프/`: 2026.11.02 실습 중 오실로스코프로 SCK·MOSI를 촬영한 사진 4장(송신값 변경 전 2장, 변경 후 2장).
 - `evidence/과제9_MCU-MCU/board_demo_task9_RX55.mp4`: 과제9 수신 보드 Serial Monitor(COM4, 9600)에 `RX=55`가 반복 출력되는 영상(약 4초).
-- 과제10~12 증거는 확보되는 대로 추가한다.
+- `evidence/과제10_MCU-FPGA/`: MCU 송신(`TX=55, result=0`) 영상과 MCU-FPGA 연결 사진.
+- `evidence/과제11_FPGA-MCU/`: FPGA 송신 SCK·MOSI 오실로스코프 영상, MCU 수신(`RX=00, FF, 55, A5` 반복) 영상.
+- `evidence/과제12_FPGA-FPGA/`: 수신 FPGA UART 출력(`RX=..` 증가) 영상.
+
+**주의:** 과제 11·12의 보드 시연은 조원이 작성한 FPGA 코드로 수행했다(영상의 송신 순서·파일명이 이 저장소의 코드와 다르다). 이 저장소의 과제 10·11·12 코드는 직접 설계하고 시뮬레이션으로 검증한 설계이며, XDC의 SPI 3핀은 비어 있다.
